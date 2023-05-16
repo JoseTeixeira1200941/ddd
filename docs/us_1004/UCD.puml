@@ -1,0 +1,8 @@
+@startuml
+
+:Manager: as Manager
+
+Manager -> (Open and close courses)
+
+
+@enduml

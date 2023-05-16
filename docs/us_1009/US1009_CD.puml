@@ -1,0 +1,28 @@
+@startuml
+class EnrollmentRequestUI {
+  + viewEnrollmentRequests()
+  + displayEnrollmentRequests()
+  + approveOrRejectEnrollmentRequest()
+}
+
+class EnrollmentController {
+  + retrieveEnrollmentRequests()
+  + retrieveEnrollmentRequestDetails()
+  + approveOrRejectEnrollmentRequest()
+  + updateEnrollmentRequestStatus()
+  + displayEnrollmentRequests()
+}
+
+class EnrollmentRepository {
+  + retrieveEnrollmentRequests()
+  + enrollmentRequestDetails()
+  + updateEnrollmentRequestStatus()
+  + enrollmentRequestApproved()
+  + enrollmentRequestRejected()
+  + errorOccurred()
+}
+
+EnrollmentRequestUI --|> EnrollmentController
+EnrollmentController --|> EnrollmentRepository
+@enduml
+l

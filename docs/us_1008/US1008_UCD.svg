@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="87px" preserveAspectRatio="none" style="width:346px;height:87px;background:#FFFFFF;" version="1.1" viewBox="0 0 346 87" width="346px" zoomAndPan="magnify"><defs/><g><!--MD5=[494c489cc4328319247ec2e1625e02a3]
+entity Student--><g id="elem_Student"><ellipse cx="32.5" cy="14" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M32.5,22 L32.5,49 M19.5,30 L45.5,30 M32.5,49 L19.5,64 M32.5,49 L45.5,64 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="53" x="6" y="79.0352">Student</text></g><g id="elem_Request enrollment in a course"><ellipse cx="217.314" cy="43.4628" fill="#F1F1F1" rx="122.814" ry="26.9628" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="213" x="110.814" y="46.7538">Request enrollment in a course</text></g><!--MD5=[358d48347227124df5753762c6d52117]
+link Student to Request enrollment in a course--><g id="link_Student_Request enrollment in a course"><path d="M59.24,43.5 C69.24,43.5 79.24,43.5 89.25,43.5 " fill="none" id="Student-to-Request enrollment in a course" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="94.48,43.5,85.48,39.5,89.48,43.5,85.48,47.5,94.48,43.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[8b26835366e34a2233d4ba3769655e99]
+@startuml
+
+:Student: as Student
+
+Student ->  (Request enrollment in a course)
+
+
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 19:12:26 WEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: pt
+Country: PT
+--></g></svg>

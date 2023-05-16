@@ -1,0 +1,32 @@
+@startuml
+actor Student
+boundary RequestEnrollmentUI
+control EnrollmentController
+database EnrollmentRepository
+
+Student -> RequestEnrollmentUI: requestEnrollment()
+RequestEnrollmentUI -> EnrollmentController: requestEnrollment()
+alt Course exists?
+EnrollmentController -> EnrollmentController: validateCourseExists()
+EnrollmentController -> EnrollmentController: validateCourseOpen()
+alt Course open for enrollment
+EnrollmentController -> EnrollmentRepository: saveEnrollmentRequest()
+EnrollmentRepository -> EnrollmentController: enrollmentRequestSaved()
+EnrollmentController -> RequestEnrollmentUI: enrollmentRequestSubmitted()
+RequestEnrollmentUI -> Student: enrollmentRequestSubmitted()
+else Course closed for enrollment
+EnrollmentController -> EnrollmentController: logErrorMessage()
+EnrollmentController -> RequestEnrollmentUI: displayErrorMessage("Course enrollment is closed")
+RequestEnrollmentUI -> Student: errorMessageDisplayed()
+end
+else Course does not exist
+EnrollmentController -> EnrollmentController: logErrorMessage()
+EnrollmentController -> RequestEnrollmentUI: displayErrorMessage("Course does not exist")
+RequestEnrollmentUI -> Student: errorMessageDisplayed()
+end
+alt Request failed
+EnrollmentController -> EnrollmentController: logErrorMessage()
+EnrollmentController -> RequestEnrollmentUI: displayErrorMessage("Request failed")
+RequestEnrollmentUI -> Student: errorMessageDisplayed()
+end
+@enduml

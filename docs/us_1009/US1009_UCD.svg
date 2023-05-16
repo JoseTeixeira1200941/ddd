@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="91px" preserveAspectRatio="none" style="width:478px;height:91px;background:#FFFFFF;" version="1.1" viewBox="0 0 478 91" width="478px" zoomAndPan="magnify"><defs/><g><!--MD5=[327d8b0cc9017ef0d2f4054fa6547e20]
+entity Manager--><g id="elem_Manager"><ellipse cx="36" cy="16" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M36,24 L36,51 M23,32 L49,32 M36,51 L23,66 M36,51 L49,66 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60" x="6" y="81.0352">Manager</text></g><g id="elem_Approve or reject students applications to courses"><ellipse cx="287.2106" cy="45.5421" fill="#F1F1F1" rx="185.7106" ry="39.5421" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="344" x="115.2106" y="48.8331">Approve or reject students applications to courses</text></g><!--MD5=[9680663dde2d5dccfa06503411e6d746]
+link Manager to Approve or reject students applications to courses--><g id="link_Manager_Approve or reject students applications to courses"><path d="M66.39,45.5 C76.3,45.5 86.21,45.5 96.11,45.5 " fill="none" id="Manager-to-Approve or reject students applications to courses" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="101.3,45.5,92.3115,41.4743,96.3,45.4857,92.2886,49.4743,101.3,45.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[2ecbe86ef43f23646f42d1fc9852778e]
+@startuml
+
+:Manager: as Manager
+
+Manager -> (Approve or reject students applications to courses)
+
+
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 19:12:26 WEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: pt
+Country: PT
+--></g></svg>

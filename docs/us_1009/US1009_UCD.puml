@@ -1,0 +1,8 @@
+@startuml
+
+:Manager: as Manager
+
+Manager -> (Approve or reject students applications to courses)
+
+
+@enduml

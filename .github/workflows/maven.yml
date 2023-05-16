@@ -1,0 +1,106 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  schedule:
+    - cron: '10 4 * * *'
+  push:
+    branches:
+      - master
+#  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: 'master'
+          fetch-depth: 0
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean verify -Dmaven.test.failure.ignore=true
+
+      - name: Generate Test Reports with Maven
+        run: mvn verify surefire-report:report -Daggregate=true checkstyle:checkstyle-aggregate -Dmaven.test.failure.ignore=true
+
+      - name: Archive checkstyle and test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-and-checkstyle-report
+          path: target/site/
+
+      - name: JUnit Tests Report
+        uses: phoenix-actions/test-reporting@v8
+        id: test-report
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JUnit Tests Report                  # Name of the check run which will be created
+          fail-on-error: 'false'
+          path: '**/target/**/surefire-reports/TEST*.xml'                     # Path to test results (inside artifact .zip)
+          reporter: java-junit              # Format of test results
+
+      # generates coverage-report.md and publishes as checkrun
+      - name: JaCoCo Code Coverage Report
+        id: jacoco_reporter
+        uses: PavanMudigonda/jacoco-reporter@v4.8
+        with:
+          coverage_results_path: base.util.ci/target/site/jacoco-aggregate/jacoco.xml
+          coverage_report_name: Coverage
+          coverage_report_title: JaCoCo
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          skip_check_run: false
+          minimum_coverage: 80
+          fail_below_threshold: false
+          publish_only_summary: false
+
+      # Publish Coverage Job Summary  # Optional
+      - name: Add Coverage Job Summary
+        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
+
+      # uploads the coverage-report.md artifact  # Optional
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-code-coverage-report
+          path: base.util.ci/target/site/jacoco-aggregate/
+
+          #    - uses: jwgmeligmeyling/checkstyle-github-action@master
+          #      with:
+          #        path: 'target/checkstyle-result.xml'
+
+      - name: Run the gitinspector HTML process with Docker
+        run: docker run --rm -v ${{ github.workspace }}:/repo felix/gitinspector:0.4.4 --format=html --grading > gitinspector.html
+
+      # uploads the gitinspector HTML report artifact  # Optional
+      - name: Upload Git Inspector Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: gitinspector-report
+          path: gitinspector.html
+
+      - name: Run the gitinspector TXT process with Docker
+        run: docker run --rm -v ${{ github.workspace }}:/repo felix/gitinspector:0.4.4 --format=text --grading > gitinspector.txt
+
+      - name: Adding markdown
+        run: cat gitinspector.txt >> $GITHUB_STEP_SUMMARY
+
+      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6

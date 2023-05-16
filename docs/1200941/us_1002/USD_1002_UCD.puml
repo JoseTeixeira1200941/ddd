@@ -1,0 +1,7 @@
+@startuml
+:Manager: as Manager
+
+Manager ->  (Create a course)
+
+
+@enduml

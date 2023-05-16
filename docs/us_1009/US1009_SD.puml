@@ -1,0 +1,31 @@
+@startuml
+actor Manager
+boundary EnrollmentRequestUI
+control EnrollmentController
+database EnrollmentRepository
+
+Manager -> EnrollmentRequestUI: viewEnrollmentRequests()
+EnrollmentRequestUI -> EnrollmentController: viewEnrollmentRequests()
+EnrollmentController -> EnrollmentRepository: retrieveEnrollmentRequests()
+EnrollmentRepository -> EnrollmentController: enrollmentRequests(enrollmentRequests)
+EnrollmentController -> EnrollmentRequestUI: displayEnrollmentRequests(enrollmentRequests)
+loop for each enrollment request
+    EnrollmentController -> EnrollmentRepository: retrieveEnrollmentRequestDetails(enrollmentRequest)
+    EnrollmentRepository -> EnrollmentController: enrollmentRequestDetails(enrollmentRequestDetails)
+    EnrollmentController -> EnrollmentRequestUI: displayEnrollmentRequestDetails(enrollmentRequestDetails)
+    Manager -> EnrollmentRequestUI: approveOrRejectEnrollmentRequest(enrollmentRequest)
+    EnrollmentRequestUI -> EnrollmentController: approveOrRejectEnrollmentRequest(enrollmentRequest, approvalStatus)
+    alt Approved
+        EnrollmentController -> EnrollmentRepository: updateEnrollmentRequestStatus(enrollmentRequest, "Approved")
+        EnrollmentRepository -> EnrollmentRequestUI: enrollmentRequestApproved()
+    else Rejected
+        EnrollmentController -> EnrollmentRepository: updateEnrollmentRequestStatus(enrollmentRequest, "Rejected")
+        EnrollmentRepository -> EnrollmentRequestUI: enrollmentRequestRejected()
+    end
+end
+alt Error
+    EnrollmentRepository -> EnrollmentRequestUI: errorOccurred()
+    Manager -> EnrollmentRequestUI: displayErrorMessage()
+    EnrollmentController -> EnrollmentRepository: updateEnrollmentRequestStatus(enrollmentRequest, "Error")
+end
+@enduml

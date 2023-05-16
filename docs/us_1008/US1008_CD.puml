@@ -1,0 +1,31 @@
+@startuml
+class RequestEnrollmentUI {
+    +requestEnrollment()
+    +enrollmentRequestSubmitted()
+    +errorMessageDisplayed()
+}
+
+class EnrollmentController {
+    -enrollmentRepository: EnrollmentRepository
+    +requestEnrollment()
+    +validateCourseExists()
+    +validateCourseOpen()
+    +saveEnrollmentRequest()
+    +logErrorMessage()
+}
+
+class EnrollmentRepository {
+    +saveEnrollmentRequest()
+    +enrollmentRequestSaved()
+}
+
+
+
+
+
+
+RequestEnrollmentUI --|> EnrollmentController
+EnrollmentController --|> EnrollmentRepository
+
+
+@enduml

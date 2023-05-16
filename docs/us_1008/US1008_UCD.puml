@@ -1,0 +1,8 @@
+@startuml
+
+:Student: as Student
+
+Student ->  (Request enrollment in a course)
+
+
+@enduml
